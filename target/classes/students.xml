@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="17" class="java.beans.XMLDecoder">
+ <object class="by.client.entity.Student">
+  <void property="birthday">
+   <object class="java.time.LocalDate" method="parse">
+    <string>2000-02-12</string>
+   </object>
+  </void>
+  <void property="characteristic">
+   <string>Clever girl</string>
+  </void>
+  <void property="id">
+   <int>1</int>
+  </void>
+  <void property="lastModification">
+   <object class="java.time.LocalDateTime" method="parse">
+    <string>2021-11-04T00:53:54.736124400</string>
+   </object>
+  </void>
+  <void property="name">
+   <string>Pasha</string>
+  </void>
+ </object>
+</java>
