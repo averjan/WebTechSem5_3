@@ -12,7 +12,7 @@ public interface StudentDAO {
      * @param criteria the criteria for search
      * @return list of found appliances
      */
-    void edit(Student newValue);
+    boolean edit(Student newValue);
 
     /**
      * Get all appliances.
@@ -32,5 +32,5 @@ public interface StudentDAO {
      *
      * @param appliances list of appliances to save into db
      */
-    void create(Student item);
+    boolean create(Student item);
 }
