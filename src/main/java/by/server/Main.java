@@ -17,7 +17,7 @@ public class Main {
                     Socket socket = server.accept();
                     try {
                         clients.add(new ClientHandler(socket));
-                    } catch (IOException | ClassNotFoundException e) {
+                    } catch (IOException e) {
                         socket.close();
                     }
                 }

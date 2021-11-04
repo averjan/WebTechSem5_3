@@ -13,7 +13,7 @@ public interface StudentService {
      * @param criteria the criteria for search
      * @return list of found appliances
      */
-    void edit(Student newValue);
+    boolean edit(Student newValue);
 
     /**
      * Gets sorted by comparator appliances.
@@ -36,5 +36,5 @@ public interface StudentService {
      *
      * @param appliances the list of appliances to add to model
      */
-    void create(Student student);
+    boolean create(Student student);
 }

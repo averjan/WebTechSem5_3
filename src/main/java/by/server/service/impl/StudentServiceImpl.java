@@ -1,6 +1,5 @@
 package by.server.service.impl;
 
-import by.server.dao.DAOFactory;
 import by.client.entity.Student;
 import by.server.dao.StudentDAO;
 import by.server.service.StudentService;
@@ -15,8 +14,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void edit(Student newValue) {
-        this.studentDAO.edit(newValue);
+    public boolean edit(Student newValue) {
+        return this.studentDAO.edit(newValue);
     }
 
     @Override
@@ -30,7 +29,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void create(Student student) {
-        studentDAO.create(student);
+    public boolean create(Student student) {
+        return studentDAO.create(student);
     }
 }
