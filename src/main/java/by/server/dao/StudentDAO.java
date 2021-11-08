@@ -1,6 +1,7 @@
 package by.server.dao;
 
 import by.client.entity.Student;
+import by.client.entity.user.User;
 
 import java.util.List;
 
@@ -33,4 +34,8 @@ public interface StudentDAO {
      * @param appliances list of appliances to save into db
      */
     boolean create(Student item);
+
+    boolean register(User user);
+
+    boolean login (User user);
 }

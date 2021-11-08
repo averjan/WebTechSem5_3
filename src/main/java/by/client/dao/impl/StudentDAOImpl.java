@@ -6,6 +6,7 @@ import by.client.entity.Student;
 import by.client.entity.StudentResponse;
 import by.client.entity.request.RequestType;
 import by.client.entity.request.ResponseType;
+import by.client.entity.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class StudentDAOImpl implements StudentDAO {
     @Override
     public List<Student> getAll() {
         StudentResponse response = socketManager
-                .sendRequest(null, RequestType.GETALL);
+                .sendRequest(null, RequestType.GET_ALL);
 
         if ((response != null)
             && (response.getResponseType() == ResponseType.OK)
@@ -57,6 +58,22 @@ public class StudentDAOImpl implements StudentDAO {
     public boolean create(Student item) {
         StudentResponse response = socketManager
                 .sendRequest(item, RequestType.CREATE);
+        return (response != null)
+                && (response.getResponseType() == ResponseType.OK);
+    }
+
+    @Override
+    public boolean register(User user) {
+        StudentResponse response = socketManager
+                .sendRequest(user, RequestType.REGISTER);
+        return (response != null)
+                && (response.getResponseType() == ResponseType.OK);
+    }
+
+    @Override
+    public boolean login(User user) {
+        StudentResponse response = socketManager
+                .sendRequest(user, RequestType.LOGIN);
         return (response != null)
                 && (response.getResponseType() == ResponseType.OK);
     }

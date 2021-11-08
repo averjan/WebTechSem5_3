@@ -1,5 +1,7 @@
 package by.client.entity;
 
+import by.client.entity.role.UserRole;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,6 +13,15 @@ public class Student implements Serializable {
     private String characteristic;
     private LocalDate birthday;
     private LocalDateTime lastModification;
+    private UserRole role;
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
 
     public int getId() {
         return id;
@@ -50,5 +61,15 @@ public class Student implements Serializable {
 
     public void setLastModification(LocalDateTime lastModification) {
         this.lastModification = lastModification;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", characteristic='" + characteristic + '\'' +
+                ", birthday=" + birthday +
+                ", lastModification=" + lastModification +
+                '}';
     }
 }

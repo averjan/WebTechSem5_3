@@ -6,5 +6,7 @@ public enum RequestType implements Serializable {
     EDIT,
     CREATE,
     GET,
-    GETALL,
+    GET_ALL,
+    REGISTER,
+    LOGIN,
 }

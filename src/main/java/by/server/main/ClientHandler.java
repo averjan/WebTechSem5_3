@@ -1,4 +1,4 @@
-package by.server;
+package by.server.main;
 
 import by.client.entity.StudentRequest;
 import by.client.entity.StudentResponse;
@@ -30,8 +30,10 @@ public class ClientHandler extends Thread {
                 StudentResponse response = switch (request.getRequestType()) {
                     case CREATE -> this.controller.create(request);
                     case GET -> this.controller.get(request);
-                    case GETALL -> this.controller.getAll(request);
+                    case GET_ALL -> this.controller.getAll(request);
                     case EDIT -> this.controller.edit(request);
+                    case REGISTER -> this.controller.register(request);
+                    case LOGIN -> this.controller.login(request);
                     default -> this.controller.notFound(request);
                 };
 

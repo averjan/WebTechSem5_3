@@ -1,6 +1,7 @@
 package by.server.service.impl;
 
 import by.client.entity.Student;
+import by.client.entity.user.User;
 import by.server.dao.StudentDAO;
 import by.server.service.StudentService;
 
@@ -31,5 +32,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public boolean create(Student student) {
         return studentDAO.create(student);
+    }
+
+    @Override
+    public boolean login(User user) {
+        return studentDAO.login(user);
+    }
+
+    @Override
+    public boolean register(User user) {
+        return studentDAO.register(user);
     }
 }

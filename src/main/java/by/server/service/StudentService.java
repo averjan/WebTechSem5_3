@@ -1,6 +1,7 @@
 package by.server.service;
 
 import by.client.entity.Student;
+import by.client.entity.user.User;
 
 import java.util.Comparator;
 import java.util.List;
@@ -37,4 +38,8 @@ public interface StudentService {
      * @param appliances the list of appliances to add to model
      */
     boolean create(Student student);
+
+    boolean login(User user);
+
+    boolean register(User user);
 }

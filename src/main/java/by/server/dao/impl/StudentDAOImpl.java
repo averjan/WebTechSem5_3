@@ -1,6 +1,7 @@
 package by.server.dao.impl;
 
 import by.client.entity.Student;
+import by.client.entity.user.User;
 import by.server.dao.StudentDAO;
 
 import java.beans.*;
@@ -15,8 +16,10 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class StudentDAOImpl implements StudentDAO {
 
-    private static final String PATH = "src/main/resources/students.xml";
-    private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true);
+    private static final String STUDENTS_XML = "src/main/resources/students.xml";
+    private static final String USERS_XML = "src/main/resources/users.xml";
+    private final ReentrantReadWriteLock studentsLock = new ReentrantReadWriteLock(true);
+    private final ReentrantReadWriteLock usersLock = new ReentrantReadWriteLock(true);
 
     @Override
     public boolean edit(Student newValue) {
@@ -28,7 +31,8 @@ public class StudentDAOImpl implements StudentDAO {
             return false;
         }
 
-        if (newValue.getLastModification().isBefore(toEdit.getLastModification())) {
+        if ((toEdit.getLastModification() != null)
+                && newValue.getLastModification().isBefore(toEdit.getLastModification())) {
             return false;
         }
 
@@ -50,10 +54,10 @@ public class StudentDAOImpl implements StudentDAO {
     public List<Student> getAll() {
         ArrayList<Student> students = new ArrayList<>();
         Student student;
-        this.lock.readLock().lock();
+        this.studentsLock.readLock().lock();
         try (XMLDecoder decoder = new XMLDecoder(
                 new BufferedInputStream(
-                        new FileInputStream(StudentDAOImpl.PATH)))) {
+                        new FileInputStream(StudentDAOImpl.STUDENTS_XML)))) {
             do {
                 student = (Student) decoder.readObject();
                 students.add(student);
@@ -63,7 +67,7 @@ public class StudentDAOImpl implements StudentDAO {
         } catch (FileNotFoundException e) {
             System.out.printf("Error trying read XML: %s%n", e.getMessage());
         } finally {
-            this.lock.readLock().unlock();
+            this.studentsLock.readLock().unlock();
         }
 
 
@@ -73,10 +77,10 @@ public class StudentDAOImpl implements StudentDAO {
     @Override
     public Student get(int id) {
         Student student;
-        this.lock.readLock().lock();
+        this.studentsLock.readLock().lock();
         try (XMLDecoder decoder = new XMLDecoder(
                 new BufferedInputStream(
-                        new FileInputStream(StudentDAOImpl.PATH)))) {
+                        new FileInputStream(StudentDAOImpl.STUDENTS_XML)))) {
 
             do {
                 student = (Student) decoder.readObject();
@@ -90,7 +94,7 @@ public class StudentDAOImpl implements StudentDAO {
         } catch (FileNotFoundException e) {
             System.out.printf("Error trying read XML: %s%n", e.getMessage());
         } finally {
-            this.lock.readLock().unlock();
+            this.studentsLock.readLock().unlock();
         }
 
 
@@ -117,10 +121,39 @@ public class StudentDAOImpl implements StudentDAO {
         return true;
     }
 
+    @Override
+    public boolean register(User user) {
+        List<User> users = getAllUsers();
+        if (users.stream().anyMatch(u -> u.getLogin().equals(user.getLogin()))) {
+            return false;
+        }
+
+        if (users.isEmpty()) {
+            user.setId(1);
+        } else {
+            User maxIdStudent = Collections.max(users, Comparator.comparing(User::getId));
+            user.setId(maxIdStudent.getId() + 1);
+        }
+
+        users.add(user);
+        try {
+            rewriteUsers(users);
+        } catch (FileNotFoundException e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean login(User user) {
+        return this.userExists(user);
+    }
+
     private void rewriteDB(List<Student> students) throws FileNotFoundException {
         try (XMLEncoder encoder = new XMLEncoder(
                 new BufferedOutputStream(
-                        new FileOutputStream(StudentDAOImpl.PATH)))) {
+                        new FileOutputStream(StudentDAOImpl.STUDENTS_XML)))) {
 
             encoder.setPersistenceDelegate(LocalDate.class,
                     new PersistenceDelegate() {
@@ -145,18 +178,80 @@ public class StudentDAOImpl implements StudentDAO {
                     });
 
             try {
-                this.lock.writeLock().lock();
+                this.studentsLock.writeLock().lock();
                 for (Student item : students) {
                     encoder.writeObject(item);
                 }
 
             } finally {
-                this.lock.writeLock().unlock();
+                this.studentsLock.writeLock().unlock();
             }
 
         } catch (ArrayIndexOutOfBoundsException ignored) {
             // End of file.
         }
+    }
 
+    private boolean userExists(User user) {
+        User readUser;
+        try (XMLDecoder decoder = new XMLDecoder(
+                new BufferedInputStream(
+                        new FileInputStream(StudentDAOImpl.USERS_XML)))) {
+
+            do {
+                readUser = (User) decoder.readObject();
+                if (readUser.getLogin().equals(user.getLogin())) {
+                    return true;
+                }
+
+            } while (readUser != null);
+
+        } catch (ArrayIndexOutOfBoundsException | FileNotFoundException ignored) {
+            // End of file.
+        }
+
+        return false;
+    }
+
+    private List<User> getAllUsers() {
+        ArrayList<User> users = new ArrayList<>();
+        User user;
+        this.usersLock.readLock().lock();
+        try (XMLDecoder decoder = new XMLDecoder(
+                new BufferedInputStream(
+                        new FileInputStream(StudentDAOImpl.USERS_XML)))) {
+            do {
+                user = (User) decoder.readObject();
+                users.add(user);
+            } while (user != null);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // End of file.
+        } catch (FileNotFoundException e) {
+            System.out.printf("Error trying read XML: %s%n", e.getMessage());
+        } finally {
+            this.usersLock.readLock().unlock();
+        }
+
+        return users;
+    }
+
+    private void rewriteUsers(List<User> users) throws FileNotFoundException {
+        try (XMLEncoder encoder = new XMLEncoder(
+                new BufferedOutputStream(
+                        new FileOutputStream(StudentDAOImpl.USERS_XML)))) {
+
+            try {
+                this.studentsLock.writeLock().lock();
+                for (User item : users) {
+                    encoder.writeObject(item);
+                }
+
+            } finally {
+                this.studentsLock.writeLock().unlock();
+            }
+
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+            // End of file.
+        }
     }
 }

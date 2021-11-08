@@ -1,18 +1,24 @@
-package by.server;
+package by.server.main;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
 
-public class Main {
+public class Server extends Thread {
+    private final int port;
     private static LinkedList<ClientHandler> clients = new LinkedList<>();
 
-    public static void main(String[] args) {
+    public Server(int port) {
+        this.port = port;
+    }
+
+    @Override
+    public void run() {
         ServerSocket server = null;
         try {
             try {
-                server = new ServerSocket(5555);
+                server = new ServerSocket(this.port);
                 while (true) {
                     Socket socket = server.accept();
                     try {
@@ -21,14 +27,14 @@ public class Main {
                         socket.close();
                     }
                 }
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             } finally {
                 if ((server != null) && !server.isClosed()) {
                     server.close();
                 }
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
     }
 }
