@@ -4,6 +4,7 @@ import by.client.entity.Student;
 import by.client.main.view.PresentationView;
 import by.client.service.StudentService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class EditModelView extends PresentationModel {
 
     @Override
     public List<Student> getItems() {
-        return Collections.singletonList(this.studentService.get(this.id));
+        Student result = this.studentService.get(this.id);
+        return result == null ? new ArrayList<>()
+                : Collections.singletonList(result);
     }
 }

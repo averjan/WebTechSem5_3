@@ -19,6 +19,8 @@ public class GetModelView extends PresentationModel {
 
     @Override
     public List<Student> getItems() {
-        return Collections.singletonList(this.studentService.get(this.id));
+        Student result = this.studentService.get(this.id);
+        return result == null ? new ArrayList<>()
+                : Collections.singletonList(result);
     }
 }

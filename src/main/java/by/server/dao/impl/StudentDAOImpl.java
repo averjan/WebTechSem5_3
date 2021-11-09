@@ -98,7 +98,7 @@ public class StudentDAOImpl implements StudentDAO {
         }
 
 
-        throw new IllegalArgumentException();
+        return null;
     }
 
     @Override
@@ -194,6 +194,7 @@ public class StudentDAOImpl implements StudentDAO {
 
     private User userExists(User user) {
         User readUser;
+        this.usersLock.readLock().lock();
         try (XMLDecoder decoder = new XMLDecoder(
                 new BufferedInputStream(
                         new FileInputStream(StudentDAOImpl.USERS_XML)))) {
@@ -208,6 +209,8 @@ public class StudentDAOImpl implements StudentDAO {
 
         } catch (ArrayIndexOutOfBoundsException | FileNotFoundException ignored) {
             // End of file.
+        } finally {
+            this.usersLock.readLock().unlock();
         }
 
         return null;

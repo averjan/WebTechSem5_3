@@ -48,11 +48,11 @@ public class EditView extends PresentationView{
         Student student;
         Scanner scanner = new Scanner(System.in);
         List<Student> items = this.model.getItems();
-        if (!items.isEmpty()) {
-            student = items.get(0);
-        } else {
+        if (items.isEmpty()) {
             System.out.println("Not found.");
             return;
+        } else {
+            student = items.get(0);
         }
 
         int i = 0;

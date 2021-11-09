@@ -65,7 +65,7 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "Student{" +
+        return id + ": Student{" +
                 "name='" + name + '\'' +
                 ", characteristic='" + characteristic + '\'' +
                 ", birthday=" + birthday +

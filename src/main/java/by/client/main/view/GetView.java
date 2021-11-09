@@ -16,8 +16,10 @@ public class GetView extends PresentationView {
     @Override
     public void show() {
         List<Student> items = this.model.getItems();
-        for (Student student : items) {
-            System.out.println(student);
+        if (items.isEmpty()) {
+            System.out.println("Element not found");
+        } else {
+            System.out.println(items.get(0));
         }
     }
 
