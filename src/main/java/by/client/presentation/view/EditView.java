@@ -56,6 +56,8 @@ public class EditView extends PresentationView{
             System.out.println(student);
         }
 
+        student.setLastModification(LocalDateTime.now());
+
         int i = 0;
         String input;
         System.out.println("Enter 'quit' to exit.");
@@ -73,7 +75,6 @@ public class EditView extends PresentationView{
             }
         }
 
-        student.setLastModification(LocalDateTime.now());
         if (!this.studentService.edit(student)) {
             System.out.println("Error writing: Probably student changed by other client.");
         }
