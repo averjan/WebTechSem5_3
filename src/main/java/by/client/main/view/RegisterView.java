@@ -11,7 +11,6 @@ import java.util.Scanner;
 import org.javatuples.Pair;
 
 public class RegisterView extends PresentationView{
-    private UserRole registerState = UserRole.GUEST;
     private List<Pair<String, SetInputUser>> inputs = Arrays.asList(
             new Pair<>("Login:", (user, input) -> {
                 user.setLogin(input);
@@ -34,8 +33,8 @@ public class RegisterView extends PresentationView{
             })
     );
 
-    public RegisterView(StudentService studentService) {
-        super(studentService);
+    public RegisterView(StudentService studentService, User user) {
+        super(studentService, user);
     }
 
     @Override
@@ -87,16 +86,16 @@ public class RegisterView extends PresentationView{
         if (auth == null) {
             System.out.println("User exists.");
         } else {
-            this.registerState = auth.getRole();
+            this.currentUser = auth;
         }
     }
 
     @Override
     public PresentationView getInput(String input) {
-        return switch (this.registerState) {
-            case USER -> new IndexView(this.studentService);
-            case ADMIN -> new AdminView(this.studentService);
-            case GUEST -> new GuestView(this.studentService);
+        return switch (this.currentUser.getRole()) {
+            case USER -> new IndexView(this.studentService, this.currentUser);
+            case ADMIN -> new AdminView(this.studentService, this.currentUser);
+            case GUEST -> new GuestView(this.studentService, this.currentUser);
         };
     }
 }

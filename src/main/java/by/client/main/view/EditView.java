@@ -1,6 +1,7 @@
 package by.client.main.view;
 
 import by.client.entity.Student;
+import by.client.entity.user.User;
 import by.client.main.view.input.SetInputStudent;
 import by.client.main.viewModel.EditModelView;
 import by.client.service.StudentService;
@@ -37,8 +38,8 @@ public class EditView extends PresentationView{
             })
     );
 
-    public EditView(StudentService studentService, int id) {
-        super(studentService);
+    public EditView(StudentService studentService, User user, int id) {
+        super(studentService, user);
         this.model = new EditModelView(studentService, id);
     }
 
@@ -54,22 +55,22 @@ public class EditView extends PresentationView{
             return;
         }
 
-        System.out.println("Print name: ");
-        student.setName(scanner.nextLine());
-        System.out.println("Birthday: ");
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        while (true) {
-            String stringDate = scanner.nextLine();
-            try {
-                student.setBirthday(LocalDate.parse(stringDate, dateTimeFormatter));
-                break;
-            } catch (DateTimeParseException ex) {
-                System.out.println("Invalid format");
+        int i = 0;
+        String input;
+        System.out.println("Enter 'quit' to exit.");
+        while (i < inputs.size()) {
+            System.out.println(inputs.get(i).getValue0());
+            input = scanner.nextLine();
+            if (input.equals("quit")) {
+                return;
+            }
+
+            if (inputs.get(i).getValue1().setInput(student, input)) {
+                i++;
+            } else {
+                System.out.println("Invalid input!");
             }
         }
-
-        System.out.println("Characteristic: ");
-        student.setCharacteristic(scanner.nextLine());
 
         student.setLastModification(LocalDateTime.now());
         if (!this.studentService.edit(student)) {
@@ -79,6 +80,6 @@ public class EditView extends PresentationView{
 
     @Override
     public PresentationView getInput(String input) {
-        return new EditSelectView(this.studentService);
+        return new EditSelectView(this.studentService, this.currentUser);
     }
 }

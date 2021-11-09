@@ -1,13 +1,14 @@
 package by.client.main.view;
 
 import by.client.entity.Student;
+import by.client.entity.user.User;
 import by.client.service.StudentService;
 
 import java.util.List;
 
 public class EditSelectView extends PresentationView{
-    public EditSelectView(StudentService studentService) {
-        super(studentService);
+    public EditSelectView(StudentService studentService, User user) {
+        super(studentService, user);
     }
 
     @Override
@@ -24,7 +25,7 @@ public class EditSelectView extends PresentationView{
     @Override
     public PresentationView getInput(String input) {
         if ("quit".equals(input)) {
-            return new IndexView(this.studentService);
+            return new AdminView(this.studentService, this.currentUser);
         }
 
         int id;
@@ -34,6 +35,6 @@ public class EditSelectView extends PresentationView{
             throw new IllegalArgumentException();
         }
 
-        return new EditView(this.studentService, id);
+        return new EditView(this.studentService, this.currentUser, id);
     }
 }

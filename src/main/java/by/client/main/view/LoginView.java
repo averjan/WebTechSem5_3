@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class LoginView extends PresentationView{
-    private UserRole loginState = UserRole.GUEST;
     private List<Pair<String, SetInputUser>> inputs = Arrays.asList(
             new Pair<>("Login:", (user, input) -> {
                 user.setLogin(input);
@@ -23,8 +22,8 @@ public class LoginView extends PresentationView{
             })
     );
 
-    public LoginView(StudentService studentService) {
-        super(studentService);
+    public LoginView(StudentService studentService, User user) {
+        super(studentService, user);
     }
 
     @Override
@@ -53,16 +52,16 @@ public class LoginView extends PresentationView{
         if (auth == null) {
             System.out.println("User not found");
         } else {
-            this.loginState = auth.getRole();
+            this.currentUser = auth;
         }
     }
 
     @Override
     public PresentationView getInput(String input) {
-        return switch (this.loginState) {
-            case USER -> new IndexView(this.studentService);
-            case ADMIN -> new AdminView(this.studentService);
-            case GUEST -> new GuestView(this.studentService);
+        return switch (this.currentUser.getRole()) {
+            case USER -> new IndexView(this.studentService, this.currentUser);
+            case ADMIN -> new AdminView(this.studentService, this.currentUser);
+            case GUEST -> new GuestView(this.studentService, this.currentUser);
         };
     }
 }

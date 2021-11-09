@@ -1,10 +1,11 @@
 package by.client.main.view;
 
+import by.client.entity.user.User;
 import by.client.service.StudentService;
 
 public class IndexView extends PresentationView {
-    public IndexView(StudentService studentService) {
-        super(studentService);
+    public IndexView(StudentService studentService, User user) {
+        super(studentService, user);
     }
 
     @Override
@@ -15,7 +16,7 @@ public class IndexView extends PresentationView {
     @Override
     public PresentationView getInput(String input) {
         return switch (input) {
-            case "1" -> new GetSelectView(this.studentService);
+            case "1" -> new GetSelectView(this.studentService, this.currentUser);
             case "2" -> null;
             default -> throw new IllegalArgumentException();
         };

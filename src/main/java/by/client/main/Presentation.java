@@ -1,13 +1,20 @@
 package by.client.main;
 
+import by.client.entity.role.UserRole;
+import by.client.entity.user.User;
+import by.client.main.view.GuestView;
 import by.client.main.view.PresentationView;
+import by.client.service.StudentService;
 
 import java.util.Scanner;
 
 public class Presentation {
     private PresentationView view;
-    public Presentation(PresentationView view) {
-        this.view = view;
+    private User currentUser = null;
+    public Presentation(StudentService studentService) {
+        this.currentUser = new User();
+        this.currentUser.setRole(UserRole.GUEST);
+        this.view = new GuestView(studentService, this.currentUser);
     }
 
     public void show() {
