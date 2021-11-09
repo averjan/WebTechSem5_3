@@ -147,7 +147,13 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public User login(User user) {
-        return this.userExists(user);
+        User existedUser  = this.userExists(user);
+        if ((existedUser != null)
+                && existedUser.getPassword().equals(user.getPassword())) {
+            return existedUser;
+        }
+
+        return null;
     }
 
     private void rewriteDB(List<Student> students) throws FileNotFoundException {
