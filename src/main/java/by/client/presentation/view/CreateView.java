@@ -3,7 +3,6 @@ package by.client.presentation.view;
 import by.client.entity.Student;
 import by.client.entity.user.User;
 import by.client.presentation.view.input.SetInputStudent;
-import by.client.presentation.viewModel.EditModelView;
 import by.client.service.StudentService;
 import org.javatuples.Pair;
 
@@ -15,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class EditView extends PresentationView{
+public class CreateView extends PresentationView {
     private final List<Pair<String, SetInputStudent>> inputs = Arrays.asList(
             new Pair<>("Print name:", (student, input) -> {
                 student.setName(input);
@@ -38,25 +37,14 @@ public class EditView extends PresentationView{
             })
     );
 
-    public EditView(StudentService studentService, User user, int id) {
+    public CreateView(StudentService studentService, User user) {
         super(studentService, user);
-        this.model = new EditModelView(studentService, id);
     }
 
     @Override
     public void show() {
-        Student student;
+        Student student = new Student();
         Scanner scanner = new Scanner(System.in);
-        List<Student> items = this.model.getItems();
-        if (items.isEmpty()) {
-            System.out.println("Not found.");
-            return;
-        } else {
-            student = items.get(0);
-            System.out.println(student);
-        }
-
-        student.setLastModification(LocalDateTime.now());
 
         int i = 0;
         String input;
@@ -75,13 +63,14 @@ public class EditView extends PresentationView{
             }
         }
 
-        if (!this.studentService.edit(student)) {
-            System.out.println("Error writing: Probably student changed by other client.");
+        student.setLastModification(LocalDateTime.now());
+        if (!this.studentService.create(student)) {
+            System.out.println("Error creating");
         }
     }
 
     @Override
     public PresentationView getInput(String input) {
-        return new EditSelectView(this.studentService, this.currentUser);
+        return new AdminView(this.studentService, this.currentUser);
     }
 }

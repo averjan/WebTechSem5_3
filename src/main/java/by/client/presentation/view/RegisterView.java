@@ -11,7 +11,7 @@ import java.util.Scanner;
 import org.javatuples.Pair;
 
 public class RegisterView extends PresentationView{
-    private List<Pair<String, SetInputUser>> inputs = Arrays.asList(
+    private final List<Pair<String, SetInputUser>> inputs = Arrays.asList(
             new Pair<>("Login:", (user, input) -> {
                 user.setLogin(input);
                 return true;
@@ -58,29 +58,6 @@ public class RegisterView extends PresentationView{
                 System.out.println("Invalid input!");
             }
         }
-        /*
-        System.out.println("Login:");
-        user.setLogin(scanner.nextLine());
-
-        System.out.println("Password:");
-        user.setPassword(scanner.nextLine());
-
-        System.out.println("Choose role(1: Admin 2: User quit: Exit)");
-        String role;
-        while (!(role = scanner.nextLine()).equals("quit")) {
-            if (role.equals("1")) {
-                user.setRole(UserRole.ADMIN);
-                break;
-            } else if (role.equals("2")) {
-                user.setRole(UserRole.USER);
-                break;
-            }
-        }
-
-        if (role.equals("quit")) {
-            return;
-        }
-        */
 
         User auth = this.studentService.register(user);
         if (auth == null) {

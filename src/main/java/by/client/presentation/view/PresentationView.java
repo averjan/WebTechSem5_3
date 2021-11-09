@@ -9,7 +9,7 @@ public abstract class PresentationView {
     protected StudentService studentService;
     protected User currentUser;
 
-    public PresentationView(StudentService studentService, User user) {
+    protected PresentationView(StudentService studentService, User user) {
         this.studentService = studentService;
         this.currentUser = user;
     }

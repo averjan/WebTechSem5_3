@@ -3,22 +3,22 @@
  <object class="by.client.entity.Student">
   <void property="birthday">
    <object class="java.time.LocalDate" method="parse">
-    <string>1990-03-02</string>
+    <string>1990-02-03</string>
    </object>
   </void>
   <void property="characteristic">
-   <string>Some characteristic</string>
+   <string>Some</string>
   </void>
   <void property="id">
    <int>1</int>
   </void>
   <void property="lastModification">
    <object class="java.time.LocalDateTime" method="parse">
-    <string>2021-11-10T02:08:59.909192700</string>
+    <string>2021-11-10T02:18:17.648157500</string>
    </object>
   </void>
   <void property="name">
-   <string>John</string>
+   <string>Jon</string>
   </void>
  </object>
  <object class="by.client.entity.Student">
@@ -40,6 +40,69 @@
   </void>
   <void property="name">
    <string>Sam</string>
+  </void>
+ </object>
+ <object class="by.client.entity.Student">
+  <void property="birthday">
+   <object class="java.time.LocalDate" method="parse">
+    <string>2000-02-02</string>
+   </object>
+  </void>
+  <void property="characteristic">
+   <string>Just girl</string>
+  </void>
+  <void property="id">
+   <int>3</int>
+  </void>
+  <void property="lastModification">
+   <object class="java.time.LocalDateTime" method="parse">
+    <string>2021-11-10T02:30:36.602514800</string>
+   </object>
+  </void>
+  <void property="name">
+   <string>Kim</string>
+  </void>
+ </object>
+ <object class="by.client.entity.Student">
+  <void property="birthday">
+   <object class="java.time.LocalDate" method="parse">
+    <string>1997-12-01</string>
+   </object>
+  </void>
+  <void property="characteristic">
+   <string>Just Jose</string>
+  </void>
+  <void property="id">
+   <int>4</int>
+  </void>
+  <void property="lastModification">
+   <object class="java.time.LocalDateTime" method="parse">
+    <string>2021-11-10T02:30:03.177502100</string>
+   </object>
+  </void>
+  <void property="name">
+   <string>Jose</string>
+  </void>
+ </object>
+ <object class="by.client.entity.Student">
+  <void property="birthday">
+   <object class="java.time.LocalDate" method="parse">
+    <string>2005-07-08</string>
+   </object>
+  </void>
+  <void property="characteristic">
+   <string>Just teen</string>
+  </void>
+  <void property="id">
+   <int>5</int>
+  </void>
+  <void property="lastModification">
+   <object class="java.time.LocalDateTime" method="parse">
+    <string>2021-11-10T02:31:42.795566400</string>
+   </object>
+  </void>
+  <void property="name">
+   <string>Miguel</string>
   </void>
  </object>
 </java>

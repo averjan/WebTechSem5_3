@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class LoginView extends PresentationView{
-    private List<Pair<String, SetInputUser>> inputs = Arrays.asList(
+    private final List<Pair<String, SetInputUser>> inputs = Arrays.asList(
             new Pair<>("Login:", (user, input) -> {
                 user.setLogin(input);
                 return true;

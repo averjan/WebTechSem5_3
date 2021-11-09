@@ -10,7 +10,7 @@ public class AdminView extends PresentationView {
 
     @Override
     public void show() {
-        System.out.println("1: Get\n2: Edit\n3: exit");
+        System.out.println("1: Get\n2: Edit\n3: Create\n4: exit");
     }
 
     @Override
@@ -18,7 +18,8 @@ public class AdminView extends PresentationView {
         return switch (input) {
             case "1" -> new GetSelectView(this.studentService, this.currentUser);
             case "2" -> new EditSelectView(this.studentService, this.currentUser);
-            case "3" -> null;
+            case "3" -> new CreateView(this.studentService, this.currentUser);
+            case "4" -> null;
             default -> throw new IllegalArgumentException();
         };
     }
