@@ -53,6 +53,7 @@ public class EditView extends PresentationView{
             return;
         } else {
             student = items.get(0);
+            System.out.println(student);
         }
 
         int i = 0;

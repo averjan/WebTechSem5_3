@@ -15,7 +15,7 @@ public class GetSelectView extends PresentationView{
     public void show() {
         List<Student> studentList = this.studentService.getAll();
         for (Student student : studentList) {
-            System.out.println(student);
+            System.out.println(student.getId() + ": " + student.getName());
         }
 
         System.out.println("Print 'quit' to exit");

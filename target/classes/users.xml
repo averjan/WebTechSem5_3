@@ -28,10 +28,24 @@
    <string>guest</string>
   </void>
   <void property="role">
-   <object class="java.lang.Enum" method="valueOf">
+   <object class="java.lang.Enum" id="UserRole0" method="valueOf">
     <class>by.client.entity.role.UserRole</class>
     <string>USER</string>
    </object>
+  </void>
+ </object>
+ <object class="by.client.entity.user.User">
+  <void property="id">
+   <int>3</int>
+  </void>
+  <void property="login">
+   <string>client</string>
+  </void>
+  <void property="password">
+   <string>client</string>
+  </void>
+  <void property="role">
+   <object idref="UserRole0"/>
   </void>
  </object>
 </java>
