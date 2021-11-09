@@ -63,18 +63,24 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
     @Override
-    public boolean register(User user) {
+    public User register(User user) {
         StudentResponse response = socketManager
                 .sendRequest(user, RequestType.REGISTER);
-        return (response != null)
-                && (response.getResponseType() == ResponseType.OK);
+        if (response.getBody() instanceof User) {
+            return (User) response.getBody();
+        }
+
+        return null;
     }
 
     @Override
-    public boolean login(User user) {
+    public User login(User user) {
         StudentResponse response = socketManager
                 .sendRequest(user, RequestType.LOGIN);
-        return (response != null)
-                && (response.getResponseType() == ResponseType.OK);
+        if (response.getBody() instanceof User) {
+            return (User) response.getBody();
+        }
+
+        return null;
     }
 }

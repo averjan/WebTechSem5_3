@@ -35,6 +35,6 @@ public interface StudentDAO {
      */
     boolean create(Student item);
 
-    boolean register(User user);
-    boolean login(User user);
+    User register(User user);
+    User login(User user);
 }

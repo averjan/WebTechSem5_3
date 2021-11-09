@@ -39,7 +39,7 @@ public interface StudentService {
      */
     boolean create(Student student);
 
-    boolean login(User user);
+    User login(User user);
 
-    boolean register(User user);
+    User register(User user);
 }

@@ -35,12 +35,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public boolean login(User user) {
+    public User login(User user) {
         return studentDAO.login(user);
     }
 
     @Override
-    public boolean register(User user) {
+    public User register(User user) {
         return studentDAO.register(user);
     }
 }

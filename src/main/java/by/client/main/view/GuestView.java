@@ -10,11 +10,16 @@ public class GuestView extends PresentationView{
 
     @Override
     public void show() {
-
+        System.out.println("1: Register\n2: Login\n3: exit");
     }
 
     @Override
     public PresentationView getInput(String input) {
-        return null;
+        return switch (input) {
+            case "1" -> new RegisterView(this.studentService);
+            case "2" -> new LoginView(this.studentService);
+            case "3" -> null;
+            default -> throw new IllegalArgumentException();
+        };
     }
 }

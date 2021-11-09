@@ -2,7 +2,9 @@ package by.client.entity.user;
 
 import by.client.entity.role.UserRole;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private int id;
     private String login;
     private String password;

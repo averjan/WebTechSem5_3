@@ -122,10 +122,10 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
     @Override
-    public boolean register(User user) {
+    public User register(User user) {
         List<User> users = getAllUsers();
         if (users.stream().anyMatch(u -> u.getLogin().equals(user.getLogin()))) {
-            return false;
+            return null;
         }
 
         if (users.isEmpty()) {
@@ -139,14 +139,14 @@ public class StudentDAOImpl implements StudentDAO {
         try {
             rewriteUsers(users);
         } catch (FileNotFoundException e) {
-            return false;
+            return null;
         }
 
-        return true;
+        return user;
     }
 
     @Override
-    public boolean login(User user) {
+    public User login(User user) {
         return this.userExists(user);
     }
 
@@ -192,7 +192,7 @@ public class StudentDAOImpl implements StudentDAO {
         }
     }
 
-    private boolean userExists(User user) {
+    private User userExists(User user) {
         User readUser;
         try (XMLDecoder decoder = new XMLDecoder(
                 new BufferedInputStream(
@@ -201,7 +201,7 @@ public class StudentDAOImpl implements StudentDAO {
             do {
                 readUser = (User) decoder.readObject();
                 if (readUser.getLogin().equals(user.getLogin())) {
-                    return true;
+                    return readUser;
                 }
 
             } while (readUser != null);
@@ -210,7 +210,7 @@ public class StudentDAOImpl implements StudentDAO {
             // End of file.
         }
 
-        return false;
+        return null;
     }
 
     private List<User> getAllUsers() {
