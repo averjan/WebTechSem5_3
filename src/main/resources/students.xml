@@ -3,7 +3,7 @@
  <object class="by.client.entity.Student">
   <void property="birthday">
    <object class="java.time.LocalDate" method="parse">
-    <string>1990-02-03</string>
+    <string>1990-03-02</string>
    </object>
   </void>
   <void property="characteristic">
@@ -14,11 +14,11 @@
   </void>
   <void property="lastModification">
    <object class="java.time.LocalDateTime" method="parse">
-    <string>2021-11-10T01:20:45.298002500</string>
+    <string>2021-11-10T02:08:59.909192700</string>
    </object>
   </void>
   <void property="name">
-   <string>Jon</string>
+   <string>John</string>
   </void>
  </object>
  <object class="by.client.entity.Student">

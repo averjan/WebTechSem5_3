@@ -66,8 +66,8 @@ public class StudentDAOImpl implements StudentDAO {
     public User register(User user) {
         StudentResponse response = socketManager
                 .sendRequest(user, RequestType.REGISTER);
-        if (response.getBody() instanceof User) {
-            return (User) response.getBody();
+        if (response.getBody() instanceof User body) {
+            return body;
         }
 
         return null;
@@ -77,8 +77,8 @@ public class StudentDAOImpl implements StudentDAO {
     public User login(User user) {
         StudentResponse response = socketManager
                 .sendRequest(user, RequestType.LOGIN);
-        if (response.getBody() instanceof User) {
-            return (User) response.getBody();
+        if (response.getBody() instanceof User body) {
+            return body;
         }
 
         return null;

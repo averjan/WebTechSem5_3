@@ -1,5 +1,7 @@
 package by.server.main;
 
+import by.server.main.server.Server;
+
 public class Main {
 
     public static void main(String[] args) {

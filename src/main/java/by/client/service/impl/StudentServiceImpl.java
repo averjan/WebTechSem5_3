@@ -8,7 +8,7 @@ import by.client.service.StudentService;
 import java.util.List;
 
 public class StudentServiceImpl implements StudentService {
-    private StudentDAO studentDAO;
+    private final StudentDAO studentDAO;
 
     public StudentServiceImpl(StudentDAO studentDAO) {
         this.studentDAO = studentDAO;
