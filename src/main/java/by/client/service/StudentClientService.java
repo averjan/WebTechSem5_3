@@ -1,11 +1,11 @@
-package by.server.dao;
+package by.client.service;
 
 import by.client.entity.Student;
 import by.client.entity.user.User;
 
 import java.util.List;
 
-public interface StudentDAO {
+public interface StudentClientService {
 
     boolean edit(Student newValue);
 
@@ -13,9 +13,9 @@ public interface StudentDAO {
 
     Student get(int id);
 
-    boolean create(Student item);
+    boolean create(Student student);
 
     User register(User user);
 
-    User login (User user);
+    User login(User user);
 }

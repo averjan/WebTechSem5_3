@@ -2,12 +2,12 @@ package by.client.presentation.view;
 
 import by.client.entity.Student;
 import by.client.entity.user.User;
-import by.client.service.StudentService;
+import by.client.service.StudentClientService;
 
 import java.util.List;
 
 public class EditSelectView extends PresentationView{
-    public EditSelectView(StudentService studentService, User user) {
+    public EditSelectView(StudentClientService studentService, User user) {
         super(studentService, user);
     }
 

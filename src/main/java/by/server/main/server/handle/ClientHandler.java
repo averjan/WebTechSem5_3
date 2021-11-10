@@ -2,10 +2,10 @@ package by.server.main.server.handle;
 
 import by.client.entity.StudentRequest;
 import by.client.entity.StudentResponse;
-import by.server.dao.DAOFactory;
+import by.server.dao.ServerDAOFactory;
 import by.server.main.server.handle.controller.StudentController;
-import by.server.service.StudentService;
-import by.server.service.impl.StudentServiceImpl;
+import by.server.service.StudentServerService;
+import by.server.service.impl.StudentServerServiceImpl;
 
 import java.io.*;
 import java.net.Socket;
@@ -18,7 +18,7 @@ public class ClientHandler extends Thread {
     public ClientHandler(Socket socket) throws IOException {
         this.out = new ObjectOutputStream(socket.getOutputStream());
         this.in = new ObjectInputStream(socket.getInputStream());
-        StudentService service = new StudentServiceImpl(DAOFactory.getInstance().getStudentDAO());
+        StudentServerService service = new StudentServerServiceImpl(ServerDAOFactory.getInstance().getStudentDAO());
         this.controller = new StudentController(service);
         start();
     }

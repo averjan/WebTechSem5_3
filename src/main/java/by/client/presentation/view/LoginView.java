@@ -2,7 +2,7 @@ package by.client.presentation.view;
 
 import by.client.entity.user.User;
 import by.client.presentation.view.input.SetInputUser;
-import by.client.service.StudentService;
+import by.client.service.StudentClientService;
 import org.javatuples.Pair;
 
 import java.util.Arrays;
@@ -21,7 +21,7 @@ public class LoginView extends PresentationView{
             })
     );
 
-    public LoginView(StudentService studentService, User user) {
+    public LoginView(StudentClientService studentService, User user) {
         super(studentService, user);
     }
 

@@ -1,6 +1,6 @@
 package by.client.dao.impl;
 
-import by.client.dao.StudentDAO;
+import by.client.dao.StudentClientDAO;
 import by.client.dao.impl.socketManager.SocketManager;
 import by.client.entity.Student;
 import by.client.entity.StudentResponse;
@@ -11,7 +11,7 @@ import by.client.entity.user.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentDAOImpl implements StudentDAO {
+public class StudentClientDAOImpl implements StudentClientDAO {
     private final SocketManager socketManager = new SocketManager("localhost", 5555);
 
     @Override

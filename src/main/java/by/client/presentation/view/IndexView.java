@@ -1,10 +1,10 @@
 package by.client.presentation.view;
 
 import by.client.entity.user.User;
-import by.client.service.StudentService;
+import by.client.service.StudentClientService;
 
 public class IndexView extends PresentationView {
-    public IndexView(StudentService studentService, User user) {
+    public IndexView(StudentClientService studentService, User user) {
         super(studentService, user);
     }
 

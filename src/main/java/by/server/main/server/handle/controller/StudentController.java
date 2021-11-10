@@ -5,14 +5,14 @@ import by.client.entity.StudentRequest;
 import by.client.entity.StudentResponse;
 import by.client.entity.request.ResponseType;
 import by.client.entity.user.User;
-import by.server.service.StudentService;
+import by.server.service.StudentServerService;
 
 import java.util.List;
 
 public class StudentController {
-    private final StudentService service;
+    private final StudentServerService service;
 
-    public StudentController(StudentService service) {
+    public StudentController(StudentServerService service) {
         this.service = service;
     }
 

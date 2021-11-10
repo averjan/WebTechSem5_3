@@ -3,12 +3,12 @@ package by.client.presentation.view;
 import by.client.entity.Student;
 import by.client.entity.user.User;
 import by.client.presentation.viewModel.GetModelView;
-import by.client.service.StudentService;
+import by.client.service.StudentClientService;
 
 import java.util.List;
 
 public class GetView extends PresentationView {
-    public GetView(StudentService studentService, User user, int id) {
+    public GetView(StudentClientService studentService, User user, int id) {
         super(studentService, user);
         this.model = new GetModelView(studentService, id);
     }

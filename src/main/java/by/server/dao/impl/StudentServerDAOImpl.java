@@ -2,53 +2,22 @@ package by.server.dao.impl;
 
 import by.client.entity.Student;
 import by.client.entity.user.User;
-import by.server.dao.StudentDAO;
+import by.server.dao.StudentServerDAO;
 
 import java.beans.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class StudentDAOImpl implements StudentDAO {
+public class StudentServerDAOImpl implements StudentServerDAO {
 
     private static final String STUDENTS_XML = "src/main/resources/students.xml";
     private static final String USERS_XML = "src/main/resources/users.xml";
     private final ReentrantReadWriteLock studentsLock = new ReentrantReadWriteLock(true);
     private final ReentrantReadWriteLock usersLock = new ReentrantReadWriteLock(true);
-
-    @Override
-    public boolean edit(Student newValue) {
-        List<Student> students = getAll();
-        Student toEdit = students.stream()
-                .filter(s -> s.getId() == newValue.getId())
-                .findFirst().orElse(null);
-        if (toEdit == null) {
-            return false;
-        }
-
-        if ((toEdit.getLastModification() != null)
-                && newValue.getLastModification().isBefore(toEdit.getLastModification())) {
-            return false;
-        }
-
-        toEdit.setName(newValue.getName());
-        toEdit.setBirthday(newValue.getBirthday());
-        toEdit.setCharacteristic(newValue.getCharacteristic());
-        toEdit.setLastModification(LocalDateTime.now());
-
-        try {
-            rewriteDB(students);
-        } catch (FileNotFoundException e) {
-            return false;
-        }
-
-        return true;
-    }
 
     @Override
     public List<Student> getAll() {
@@ -57,7 +26,7 @@ public class StudentDAOImpl implements StudentDAO {
         this.studentsLock.readLock().lock();
         try (XMLDecoder decoder = new XMLDecoder(
                 new BufferedInputStream(
-                        new FileInputStream(StudentDAOImpl.STUDENTS_XML)))) {
+                        new FileInputStream(StudentServerDAOImpl.STUDENTS_XML)))) {
             do {
                 student = (Student) decoder.readObject();
                 students.add(student);
@@ -80,7 +49,7 @@ public class StudentDAOImpl implements StudentDAO {
         this.studentsLock.readLock().lock();
         try (XMLDecoder decoder = new XMLDecoder(
                 new BufferedInputStream(
-                        new FileInputStream(StudentDAOImpl.STUDENTS_XML)))) {
+                        new FileInputStream(StudentServerDAOImpl.STUDENTS_XML)))) {
 
             do {
                 student = (Student) decoder.readObject();
@@ -102,64 +71,10 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
     @Override
-    public boolean create(Student item) {
-        List<Student> students = getAll();
-        if (students.isEmpty()) {
-            item.setId(1);
-        } else {
-            Student maxIdStudent = Collections.max(students, Comparator.comparing(Student::getId));
-            item.setId(maxIdStudent.getId() + 1);
-        }
-
-        students.add(item);
-        try {
-            rewriteDB(students);
-        } catch (FileNotFoundException e) {
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
-    public User register(User user) {
-        List<User> users = getAllUsers();
-        if (users.stream().anyMatch(u -> u.getLogin().equals(user.getLogin()))) {
-            return null;
-        }
-
-        if (users.isEmpty()) {
-            user.setId(1);
-        } else {
-            User maxIdStudent = Collections.max(users, Comparator.comparing(User::getId));
-            user.setId(maxIdStudent.getId() + 1);
-        }
-
-        users.add(user);
-        try {
-            rewriteUsers(users);
-        } catch (FileNotFoundException e) {
-            return null;
-        }
-
-        return user;
-    }
-
-    @Override
-    public User login(User user) {
-        User existedUser  = this.userExists(user);
-        if ((existedUser != null)
-                && existedUser.getPassword().equals(user.getPassword())) {
-            return existedUser;
-        }
-
-        return null;
-    }
-
-    private void rewriteDB(List<Student> students) throws FileNotFoundException {
+    public void rewriteStudents(List<Student> students) throws FileNotFoundException {
         try (XMLEncoder encoder = new XMLEncoder(
                 new BufferedOutputStream(
-                        new FileOutputStream(StudentDAOImpl.STUDENTS_XML)))) {
+                        new FileOutputStream(StudentServerDAOImpl.STUDENTS_XML)))) {
 
             encoder.setPersistenceDelegate(LocalDate.class,
                     new PersistenceDelegate() {
@@ -198,12 +113,13 @@ public class StudentDAOImpl implements StudentDAO {
         }
     }
 
-    private User userExists(User user) {
+    @Override
+    public User userExists(User user) {
         User readUser;
         this.usersLock.readLock().lock();
         try (XMLDecoder decoder = new XMLDecoder(
                 new BufferedInputStream(
-                        new FileInputStream(StudentDAOImpl.USERS_XML)))) {
+                        new FileInputStream(StudentServerDAOImpl.USERS_XML)))) {
 
             do {
                 readUser = (User) decoder.readObject();
@@ -222,13 +138,14 @@ public class StudentDAOImpl implements StudentDAO {
         return null;
     }
 
-    private List<User> getAllUsers() {
+    @Override
+    public List<User> getAllUsers() {
         ArrayList<User> users = new ArrayList<>();
         User user;
         this.usersLock.readLock().lock();
         try (XMLDecoder decoder = new XMLDecoder(
                 new BufferedInputStream(
-                        new FileInputStream(StudentDAOImpl.USERS_XML)))) {
+                        new FileInputStream(StudentServerDAOImpl.USERS_XML)))) {
             do {
                 user = (User) decoder.readObject();
                 users.add(user);
@@ -244,10 +161,11 @@ public class StudentDAOImpl implements StudentDAO {
         return users;
     }
 
-    private void rewriteUsers(List<User> users) throws FileNotFoundException {
+    @Override
+    public void rewriteUsers(List<User> users) throws FileNotFoundException {
         try (XMLEncoder encoder = new XMLEncoder(
                 new BufferedOutputStream(
-                        new FileOutputStream(StudentDAOImpl.USERS_XML)))) {
+                        new FileOutputStream(StudentServerDAOImpl.USERS_XML)))) {
 
             try {
                 this.studentsLock.writeLock().lock();

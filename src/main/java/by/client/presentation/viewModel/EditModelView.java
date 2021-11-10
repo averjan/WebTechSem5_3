@@ -1,7 +1,7 @@
 package by.client.presentation.viewModel;
 
 import by.client.entity.Student;
-import by.client.service.StudentService;
+import by.client.service.StudentClientService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,7 +10,7 @@ import java.util.List;
 public class EditModelView extends PresentationModel {
     private final int id;
 
-    public EditModelView(StudentService studentService, int id) {
+    public EditModelView(StudentClientService studentService, int id) {
         super(studentService);
         this.id = id;
     }

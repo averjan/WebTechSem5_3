@@ -3,7 +3,7 @@ package by.client.presentation.view;
 import by.client.entity.Student;
 import by.client.entity.user.User;
 import by.client.presentation.view.input.SetInputStudent;
-import by.client.service.StudentService;
+import by.client.service.StudentClientService;
 import org.javatuples.Pair;
 
 import java.time.LocalDate;
@@ -37,7 +37,7 @@ public class CreateView extends PresentationView {
             })
     );
 
-    public CreateView(StudentService studentService, User user) {
+    public CreateView(StudentClientService studentService, User user) {
         super(studentService, user);
     }
 

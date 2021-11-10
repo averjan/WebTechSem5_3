@@ -1,16 +1,16 @@
 package by.client.service.impl;
 
-import by.client.dao.StudentDAO;
+import by.client.dao.StudentClientDAO;
 import by.client.entity.Student;
 import by.client.entity.user.User;
-import by.client.service.StudentService;
+import by.client.service.StudentClientService;
 
 import java.util.List;
 
-public class StudentServiceImpl implements StudentService {
-    private final StudentDAO studentDAO;
+public class StudentClientServiceImpl implements StudentClientService {
+    private final StudentClientDAO studentDAO;
 
-    public StudentServiceImpl(StudentDAO studentDAO) {
+    public StudentClientServiceImpl(StudentClientDAO studentDAO) {
         this.studentDAO = studentDAO;
     }
 

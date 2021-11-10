@@ -105,4 +105,25 @@
    <string>Miguel</string>
   </void>
  </object>
+ <object class="by.client.entity.Student">
+  <void property="birthday">
+   <object class="java.time.LocalDate" method="parse">
+    <string>2015-05-06</string>
+   </object>
+  </void>
+  <void property="characteristic">
+   <string>A boy</string>
+  </void>
+  <void property="id">
+   <int>6</int>
+  </void>
+  <void property="lastModification">
+   <object class="java.time.LocalDateTime" method="parse">
+    <string>2021-11-10T03:05:56.969335300</string>
+   </object>
+  </void>
+  <void property="name">
+   <string>Rafael</string>
+  </void>
+ </object>
 </java>

@@ -5,7 +5,7 @@ import by.client.entity.user.User;
 
 import java.util.List;
 
-public interface StudentDAO {
+public interface StudentClientDAO {
 
     boolean edit(Student newValue);
 

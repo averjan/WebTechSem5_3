@@ -1,10 +1,10 @@
 package by.client.presentation.view;
 
 import by.client.entity.user.User;
-import by.client.service.StudentService;
+import by.client.service.StudentClientService;
 
 public class AdminView extends PresentationView {
-    public AdminView(StudentService studentService, User user) {
+    public AdminView(StudentClientService studentService, User user) {
         super(studentService, user);
     }
 

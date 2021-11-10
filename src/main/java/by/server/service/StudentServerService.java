@@ -1,11 +1,11 @@
-package by.client.service;
+package by.server.service;
 
 import by.client.entity.Student;
 import by.client.entity.user.User;
 
 import java.util.List;
 
-public interface StudentService {
+public interface StudentServerService {
 
     boolean edit(Student newValue);
 
@@ -15,7 +15,7 @@ public interface StudentService {
 
     boolean create(Student student);
 
-    User register(User user);
-
     User login(User user);
+
+    User register(User user);
 }

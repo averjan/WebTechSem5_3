@@ -4,7 +4,7 @@ import by.client.entity.Student;
 import by.client.entity.user.User;
 import by.client.presentation.view.input.SetInputStudent;
 import by.client.presentation.viewModel.EditModelView;
-import by.client.service.StudentService;
+import by.client.service.StudentClientService;
 import org.javatuples.Pair;
 
 import java.time.LocalDate;
@@ -38,7 +38,7 @@ public class EditView extends PresentationView{
             })
     );
 
-    public EditView(StudentService studentService, User user, int id) {
+    public EditView(StudentClientService studentService, User user, int id) {
         super(studentService, user);
         this.model = new EditModelView(studentService, id);
     }
